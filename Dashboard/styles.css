@@ -3,7 +3,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: cyan;
+    background-color: 204, 219, 220;
+  }
+
+.registro{
+  display: none;
+}
+
+  .main{
+    display: none;
   }
 
   

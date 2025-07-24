@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los datos de tu malla curricular
     // Puedes modificar este objeto con tu carrera, materias, créditos y prerrequisitos reales.
     const datosMalla = {
-        nombreCarrera: "Ingeniería en Software",
+        nombreCarrera: "Ingeniería en Ciencias Computacionales",
         semestres: [
             {
                 nombre: "Primer Semestre",

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 nombre: "Segundo Semestre",
                 materias: [
                     { id: "Calcul201", titulo: "Calculo diferencial e integral", creditos: 8, prerrequisitos: ["precal101"] },
-                    { id: "Electr202", titulo: "Electromagnetismo para ing.", creditos: 8, prerrequisitos: [""] },
+                    { id: "Electr202", titulo: "Electromagnetismo para ing.", creditos: 8, prerrequisitos: [] },
                     { id: "Electr203", titulo: "Electronica digital", creditos: 6, prerrequisitos: [] },
                     { id: "Admini204", titulo: "Administracion", creditos: 9, prerrequisitos: [] },
                     { id: "Progob205", titulo: "Programacion orientada a objetos", creditos: 8, prerrequisitos: ["Proges108"] },
@@ -33,15 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 nombre: "Tercer Semestre",
                 materias: [
                     { id: "Algebr301", titulo: "Algebra Lineal", creditos: 8, prerrequisitos: [] },
-                    { id: "Probes302", titulo: "Probabilidad y estadistica", creditos: 6, prerrequisitos: [] }, // Ejemplo: BDD podría solo necesitar Intro a Prog
+                    { id: "Probes302", titulo: "Probabilidad y estadistica", creditos: 6, prerrequisitos: [] },
                     { id: "Propid303", titulo: "Propiedad intelectual y derechos de autor", creditos: 6, prerrequisitos: [] },
                     { id: "Progev304", titulo: "Programacion orientada a eventos", creditos: 8, prerrequisitos: ["Progob205"] },
                     { id: "SistII305", titulo: "Sistemas operativos II", creditos: 8, prerrequisitos: ["SisteI206"] },
                     { id: "BasesI306", titulo: "Bases de datos I", creditos: 6, prerrequisitos: [] },
-                    { id: "Estruc307", titulo: "Estructura de datos", creditos: 6, prerrequisitos: ["Organi207  "] }
+                    { id: "Estruc307", titulo: "Estructura de datos", creditos: 6, prerrequisitos: ["Organi207"] }
                 ]
             },
-
             {
                 nombre: "Cuarto Semestre",
                 materias: [
@@ -54,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: "RedesI407", titulo: "Redes I", creditos: 8, prerrequisitos: [] }
                 ]
             },
-
             {
                 nombre: "Quinto Semestre",
                 materias: [
@@ -67,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: "RedeII507", titulo: "Redes II", creditos: 8, prerrequisitos: ["RedesI407"] }
                 ]
             },
-
             {
                 nombre: "Sexto Semestre",
                 materias: [
@@ -78,10 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: "Metcon605", titulo: "Metodos y conceptos de las cs. sociales", creditos: 11, prerrequisitos: [] },
                     { id: "Espsel606", titulo: "Especializante selectiva I", creditos: 6, prerrequisitos: [] },
                     { id: "Optabi607", titulo: "Obtativa abierta", creditos: 6, prerrequisitos: [] },
-
                 ]
             },
-
             {
                 nombre: "Septimo Semestre",
                 materias: [
@@ -94,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: "OptaII707", titulo: "Optativa abierta II", creditos: 6, prerrequisitos: [] },
                 ]
             },
-
             {
                 nombre: "Octavo Semestre",
                 materias: [
@@ -107,12 +101,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: "OpaIII", titulo: "Optativa abierta III", creditos: 6, prerrequisitos: [] }
                 ]
             }
-
         ]
     };
 
     const mallaCurricular = document.getElementById('malla-curricular');
-    let materiasCompletadas = new Set(); // Para llevar un registro de los IDs de las materias completadas
+
+    // --- CAMBIO CLAVE 1: Cargar el estado desde localStorage ---
+    // Intenta obtener los IDs de las materias completadas de localStorage.
+    // Si no hay nada guardado, obtendrás 'null', por lo que usamos '[]' como fallback.
+    // JSON.parse convierte el string JSON en un array, y luego creamos un Set a partir de él.
+    let materiasCompletadas = new Set(JSON.parse(localStorage.getItem('materiasCompletadas') || '[]'));
+    // -------------------------------------------------------------
 
     // --- Funciones ---
 
@@ -129,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 divMateria.classList.add('materia');
                 divMateria.setAttribute('data-id-materia', materia.id);
 
-                // Comprueba si la materia está completada
+                // Comprueba si la materia está completada (usando el Set cargado)
                 if (materiasCompletadas.has(materia.id)) {
                     divMateria.classList.add('completada');
                 }
@@ -169,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!prerrequisitos || prerrequisitos.length === 0) {
             return true; // No hay prerrequisitos, por lo tanto siempre se cumplen
         }
+        // Verifica si TODOS los prerrequisitos están en el Set de materiasCompletadas
         return prerrequisitos.every(idPrereq => materiasCompletadas.has(idPrereq));
     }
 
@@ -186,6 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             materiasCompletadas.add(idMateria); // Marcar como completada
         }
+
+        // --- CAMBIO CLAVE 2: Guardar el estado en localStorage ---
+        // Convertimos el Set a un Array para poder convertirlo a string JSON,
+        // ya que localStorage solo almacena strings.
+        localStorage.setItem('materiasCompletadas', JSON.stringify(Array.from(materiasCompletadas)));
+        // ---------------------------------------------------------
 
         // Volver a renderizar la malla para actualizar todos los estados de las materias
         renderizarMalla();

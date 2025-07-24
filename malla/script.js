@@ -2,21 +2,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los datos de tu malla curricular
     // Puedes modificar este objeto con tu carrera, materias, créditos y prerrequisitos reales.
     const datosMalla = {
-        nombreCarrera: "Ingeniería en Software",
+        nombreCarrera: "Ingeniería en Ciencias Computacionales",
         semestres: [
             {
                 nombre: "Primer Semestre",
                 materias: [
-                    { id: "prog101", titulo: "Introducción a la Programación", creditos: 4, prerrequisitos: [] },
-                    { id: "calc101", titulo: "Cálculo Diferencial", creditos: 5, prerrequisitos: [] },
-                    { id: "fis101", titulo: "Física Básica", creditos: 3, prerrequisitos: [] }
+                    { id: "precal101", titulo: "Precálculo", creditos: 8, prerrequisitos: [] },
+                    { id: "Mecani102", titulo: "Mecánica", creditos: 8, prerrequisitos: [] },
+                    { id: "Desarr103", titulo: "Desarrollo de competencias digitales", creditos: 6, prerrequisitos: [] },
+                    { id: "Filoso104", titulo: "Filosofia de la ciencia", creditos: 6, prerrequisitos: [] },
+                    { id: "Quimic105", titulo: "Quimica General", creditos: 9, prerrequisitos: [] },
+                    { id: "Matedi106", titulo: "Matematicas discretas", creditos: 6, prerrequisitos: [] },
+                    { id: "Fundam107", titulo: "Fundamentos de la cs. computacional", creditos: 8, prerrequisitos: [] },
+                    { id: "Proges108", titulo: "Programacion estructurada", creditos: 8, prerrequisitos: [] },
                 ]
             },
             {
                 nombre: "Segundo Semestre",
                 materias: [
-                    { id: "prog102", titulo: "Programación Orientada a Objetos", creditos: 4, prerrequisitos: ["prog101"] },
-                    { id: "calc102", titulo: "Cálculo Integral", creditos: 5, prerrequisitos: ["calc101"] },
+                    { id: "Calcul201", titulo: "Calculo diferencial e integral", creditos: 8, prerrequisitos: ["precal101"] },
+                    { id: "Electr202", titulo: "Electromagnetismo para ing.", creditos: 8, prerrequisitos: [""] },
+                    { id: "Electr203", titulo: "Electronica digital", creditos: 6, prerrequisitos: [] }
+                    { id: "Admini204", titulo: "Administracion", creditos: 9, prerrequisitos: [] }
+                    { id: "progob205", titulo: "Programacion orientada a objetos", creditos: 8, prerrequisitos: [] }
+                    { id: "alg101", titulo: "Álgebra Lineal", creditos: 4, prerrequisitos: [] }
                     { id: "alg101", titulo: "Álgebra Lineal", creditos: 4, prerrequisitos: [] }
                 ]
             },

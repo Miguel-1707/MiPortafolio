@@ -1,0 +1,56 @@
+/*Reestablecimiento de valores de toda la pagina a predeterminados*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #CCDBDC;
+  }
+
+html{
+  min-height: 100%;
+}
+
+body{
+  height: 100vh;
+  min-height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.init{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px black solid;
+  padding: 3px 3px;
+  width: 30%;
+  height: 70%;
+  flex-grow: 0;
+}
+
+.key{
+  width: 100px;
+  height: 100px;
+}
+
+.registro{
+  display: none;
+}
+
+.main{
+    display: none;
+  }
+
+.footer{
+
+}
+  

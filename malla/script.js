@@ -22,29 +22,92 @@ document.addEventListener('DOMContentLoaded', () => {
                 materias: [
                     { id: "Calcul201", titulo: "Calculo diferencial e integral", creditos: 8, prerrequisitos: ["precal101"] },
                     { id: "Electr202", titulo: "Electromagnetismo para ing.", creditos: 8, prerrequisitos: [""] },
-                    { id: "Electr203", titulo: "Electronica digital", creditos: 6, prerrequisitos: [] }
-                    { id: "Admini204", titulo: "Administracion", creditos: 9, prerrequisitos: [] }
-                    { id: "progob205", titulo: "Programacion orientada a objetos", creditos: 8, prerrequisitos: [] }
-                    { id: "alg101", titulo: "Álgebra Lineal", creditos: 4, prerrequisitos: [] }
-                    { id: "alg101", titulo: "Álgebra Lineal", creditos: 4, prerrequisitos: [] }
+                    { id: "Electr203", titulo: "Electronica digital", creditos: 6, prerrequisitos: [] },
+                    { id: "Admini204", titulo: "Administracion", creditos: 9, prerrequisitos: [] },
+                    { id: "Progob205", titulo: "Programacion orientada a objetos", creditos: 8, prerrequisitos: ["Proges108"] },
+                    { id: "SisteI206", titulo: "Sistemas operativos I", creditos: 8, prerrequisitos: [] },
+                    { id: "Organi207", titulo: "Organizacion Computacional", creditos: 6, prerrequisitos: [] }
                 ]
             },
             {
                 nombre: "Tercer Semestre",
                 materias: [
-                    { id: "estDatos", titulo: "Estructura de Datos", creditos: 4, prerrequisitos: ["prog102"] },
-                    { id: "bdd", titulo: "Bases de Datos", creditos: 4, prerrequisitos: ["prog101"] }, // Ejemplo: BDD podría solo necesitar Intro a Prog
-                    { id: "redes", titulo: "Redes de Computadoras", creditos: 3, prerrequisitos: [] }
+                    { id: "Algebr301", titulo: "Algebra Lineal", creditos: 8, prerrequisitos: [] },
+                    { id: "Probes302", titulo: "Probabilidad y estadistica", creditos: 6, prerrequisitos: [] }, // Ejemplo: BDD podría solo necesitar Intro a Prog
+                    { id: "Propid303", titulo: "Propiedad intelectual y derechos de autor", creditos: 6, prerrequisitos: [] },
+                    { id: "Progev304", titulo: "Programacion orientada a eventos", creditos: 8, prerrequisitos: ["Progob205"] },
+                    { id: "SistII305", titulo: "Sistemas operativos II", creditos: 8, prerrequisitos: ["SisteI206"] },
+                    { id: "BasesI306", titulo: "Bases de datos I", creditos: 6, prerrequisitos: [] },
+                    { id: "Estruc307", titulo: "Estructura de datos", creditos: 6, prerrequisitos: ["Organi207  "] }
                 ]
             },
+
             {
                 nombre: "Cuarto Semestre",
                 materias: [
-                    { id: "webDev", titulo: "Desarrollo Web", creditos: 5, prerrequisitos: ["estDatos", "bdd"] },
-                    { id: "sisOperativos", titulo: "Sistemas Operativos", creditos: 4, prerrequisitos: ["prog102"] }
+                    { id: "Ecudif401", titulo: "Ecuaciones diferenciales", creditos: 6, prerrequisitos: ["Calcul201"] },
+                    { id: "Metonu402", titulo: "Metodos numericos", creditos: 8, prerrequisitos: ["Calcul201", "Algebr301"] },
+                    { id: "Algori403", titulo: "Algoritmia", creditos: 8, prerrequisitos: [] },
+                    { id: "Progwb404", titulo: "Programacion web", creditos: 8, prerrequisitos: [] },
+                    { id: "Ingsof405", titulo: "Ingenieria de software", creditos: 6, prerrequisitos: [] },
+                    { id: "BaseII406", titulo: "Bases de datos II", creditos: 6, prerrequisitos: ["BasesI306"] },
+                    { id: "RedesI407", titulo: "Redes I", creditos: 8, prerrequisitos: [] }
+                ]
+            },
+
+            {
+                nombre: "Quinto Semestre",
+                materias: [
+                    { id: "Mateav501", titulo: "Matematicas Avanzadas para ing.", creditos: 6, prerrequisitos: ["Calcul201"] },
+                    { id: "Acettc502", titulo: "Acercamiento Transdiciplinario", creditos: 11, prerrequisitos: [] },
+                    { id: "Proglo503", titulo: "Programacion logica y funcional", creditos: 8, prerrequisitos: [] },
+                    { id: "Teoria504", titulo: "Teoria de la computacion", creditos: 8, prerrequisitos: ["Algori403"] },
+                    { id: "Grafin505", titulo: "Graficos, interfaces y usabilidad", creditos: 6, prerrequisitos: [] },
+                    { id: "Sistin506", titulo: "Sistemas inteligentes", creditos: 6, prerrequisitos: [] },
+                    { id: "RedeII507", titulo: "Redes II", creditos: 8, prerrequisitos: ["RedesI407"] }
+                ]
+            },
+
+            {
+                nombre: "Sexto Semestre",
+                materias: [
+                    { id: "Modema601", titulo: "Modelado matematico de sistemas", creditos: 8, prerrequisitos: [] },
+                    { id: "Forepi602", titulo: "Formacion y evaluacion de proyectos", creditos: 7, prerrequisitos: [] },
+                    { id: "Progsw603", titulo: "Programacion de Servicios web", creditos: 8, prerrequisitos: [] },
+                    { id: "Lidead604", titulo: "Liderazgo y habilidades directivas", creditos: 8, prerrequisitos: ["Admini204"] },
+                    { id: "Metcon605", titulo: "Metodos y conceptos de las cs. sociales", creditos: 11, prerrequisitos: [] },
+                    { id: "Espsel606", titulo: "Especializante selectiva I", creditos: 6, prerrequisitos: [] },
+                    { id: "Optabi607", titulo: "Obtativa abierta", creditos: 6, prerrequisitos: [] },
+
+                ]
+            },
+
+            {
+                nombre: "Septimo Semestre",
+                materias: [
+                    { id: "Metpra701", titulo: "Metodologia y practica de la investigacion", creditos: 9, prerrequisitos: [] },
+                    { id: "Mindat702", titulo: "Mineria de datos", creditos: 6, prerrequisitos: [] },
+                    { id: "Cripto703", titulo: "Criptografia", creditos: 6, prerrequisitos: ["Teoria504"] },
+                    { id: "ComSus704", titulo: "Computacion sustentable", creditos: 6, prerrequisitos: [] },
+                    { id: "EselII705", titulo: "Especializante selectiva II", creditos: 6, prerrequisitos: [] },
+                    { id: "EseIII706", titulo: "Especializante selectiva III", creditos: 5, prerrequisitos: [] },
+                    { id: "OptaII707", titulo: "Optativa abierta II", creditos: 6, prerrequisitos: [] },
+                ]
+            },
+
+            {
+                nombre: "Octavo Semestre",
+                materias: [
+                    { id: "Protit801", titulo: "Proyecto de Titulacion", creditos: 6, prerrequisitos: ["Desarr103", "Metpra701"] },
+                    { id: "Foremp802", titulo: "Formacion de emprendedores", creditos: 6, prerrequisitos: ["Admini204"] },
+                    { id: "Progpa803", titulo: "Programacion paralela", creditos: 8, prerrequisitos: ["Proglo503"] },
+                    { id: "Tralen804", titulo: "Traductores de lenguajes", creditos: 8, prerrequisitos: ["Teoria504"] },
+                    { id: "EselIV805", titulo: "Especializante selectiva IV", creditos: 6, prerrequisitos: [] },
+                    { id: "EseleV", titulo: "Especializante selectiva V", creditos: 6, prerrequisitos: [] },
+                    { id: "OpaIII", titulo: "Optativa abierta III", creditos: 6, prerrequisitos: [] }
                 ]
             }
-            // Añade más semestres y materias aquí
+
         ]
     };
 

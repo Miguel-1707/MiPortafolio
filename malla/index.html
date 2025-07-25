@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malla Curricular Interactiva</title>
     <link rel="stylesheet" href="style.css">
+    
+    <script type="module">
+        // Importa las funciones necesarias del SDK de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        // ¡Importa Firestore y las funciones para interactuar con él!
+        import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"; 
+
+        // Tu configuración de la app web de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAS9JlBGMIp9JPY0DZr4nZthARC1cIAa24",
+            authDomain: "mallacurricular-d88c2.firebaseapp.com",
+            projectId: "mallacurricular-d88c2",
+            storageBucket: "mallacurricular-d88c2.firebasestorage.app",
+            messagingSenderId: "656714625813",
+            appId: "1:656714625813:web:61b6938466bbd7034aaf1c"
+        };
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        // Obtén una referencia a Firestore y hazla global para que script.js pueda acceder
+        window.db = getFirestore(app); 
+        // Haz las funciones de Firestore globales también para simplificar el acceso en script.js
+        window.firestoreCollection = collection;
+        window.firestoreDoc = doc;
+        window.firestoreSetDoc = setDoc;
+        window.firestoreGetDoc = getDoc; // También para cargar datos
+    </script>
 </head>
 <body>
     <div class="contenedor">

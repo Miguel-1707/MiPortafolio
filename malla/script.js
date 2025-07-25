@@ -106,12 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mallaCurricular = document.getElementById('malla-curricular');
 
-    // --- CAMBIO CLAVE 1: Cargar el estado desde localStorage ---
-    // Intenta obtener los IDs de las materias completadas de localStorage.
-    // Si no hay nada guardado, obtendrás 'null', por lo que usamos '[]' como fallback.
-    // JSON.parse convierte el string JSON en un array, y luego creamos un Set a partir de él.
-    let materiasCompletadas = new Set(JSON.parse(localStorage.getItem('materiasCompletadas') || '[]'));
-    // -------------------------------------------------------------
+    // Inicialización de materiasCompletadas para Firebase:
+    // Ahora, materiasCompletadas se inicializará como un Set vacío
+    // y se llenará con los datos de Firebase Firestore después de cargarlos.
+    let materiasCompletadas = new Set();
 
     // --- Funciones ---
 
@@ -128,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 divMateria.classList.add('materia');
                 divMateria.setAttribute('data-id-materia', materia.id);
 
-                // Comprueba si la materia está completada (usando el Set cargado)
+                // Comprueba si la materia está completada (usando el Set)
                 if (materiasCompletadas.has(materia.id)) {
                     divMateria.classList.add('completada');
                 }
@@ -172,8 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return prerrequisitos.every(idPrereq => materiasCompletadas.has(idPrereq));
     }
 
-    // Alterna el estado de completado de una materia
-    function alternarCompletadoMateria(idMateria) {
+    // Alterna el estado de completado de una materia y la guarda en Firestore
+    async function alternarCompletadoMateria(idMateria) {
         const elementoMateria = document.querySelector(`[data-id-materia="${idMateria}"]`);
 
         if (elementoMateria.classList.contains('bloqueada')) {
@@ -187,16 +185,56 @@ document.addEventListener('DOMContentLoaded', () => {
             materiasCompletadas.add(idMateria); // Marcar como completada
         }
 
-        // --- CAMBIO CLAVE 2: Guardar el estado en localStorage ---
-        // Convertimos el Set a un Array para poder convertirlo a string JSON,
-        // ya que localStorage solo almacena strings.
-        localStorage.setItem('materiasCompletadas', JSON.stringify(Array.from(materiasCompletadas)));
-        // ---------------------------------------------------------
+        // Define un ID fijo para tu documento de progreso en Firestore (¡Usa el mismo que en las reglas de seguridad!)
+        const userProgressId = 'miProgresoMiguel'; 
+
+        try {
+            // Usa las funciones globales de Firestore importadas y pasadas a window en index.html
+            // window.db es la instancia de Firestore
+            // window.firestoreCollection, window.firestoreDoc, window.firestoreSetDoc son las funciones
+            const userDocRef = window.firestoreDoc(window.db, 'userProgress', userProgressId);
+            await window.firestoreSetDoc(userDocRef, {
+                completedCourses: Array.from(materiasCompletadas) // Convierte el Set a un Array para guardar en Firestore
+            });
+            console.log("Progreso guardado en Firestore con ID:", userProgressId);
+        } catch (e) {
+            console.error("Error guardando el progreso en Firestore: ", e);
+            alert("Hubo un error al guardar tu progreso. Inténtalo de nuevo.");
+        }
 
         // Volver a renderizar la malla para actualizar todos los estados de las materias
         renderizarMalla();
     }
 
-    // --- Renderizado Inicial ---
-    renderizarMalla();
+    // Carga el estado de las materias desde Firestore al inicio de la aplicación
+    async function cargarProgresoDesdeFirestore() {
+        const userProgressId = 'miProgresoMiguel'; // <-- USA EL MISMO ID FIJO AQUÍ
+
+        try {
+            // Usa las funciones globales de Firestore importadas y pasadas a window
+            const userDocRef = window.firestoreDoc(window.db, 'userProgress', userProgressId);
+            const docSnapshot = await window.firestoreGetDoc(userDocRef); // Usa getDoc para obtener el documento
+
+            if (docSnapshot.exists()) {
+                const data = docSnapshot.data();
+                if (data.completedCourses) {
+                    materiasCompletadas = new Set(data.completedCourses);
+                    console.log("Progreso cargado desde Firestore:", data.completedCourses);
+                }
+            } else {
+                console.log("No se encontró progreso guardado en Firestore para este ID. Iniciando con vacío.");
+                // Si es la primera vez que se carga este ID, creamos un documento inicial vacío
+                await window.firestoreSetDoc(userDocRef, { completedCourses: [] });
+            }
+        } catch (e) {
+            console.error("Error cargando el progreso desde Firestore: ", e);
+            alert("Hubo un error al cargar tu progreso. Puede que se haya iniciado sin datos.");
+        }
+        // Finalmente, renderiza la malla después de que los datos (o la falta de ellos) se hayan cargado.
+        renderizarMalla();
+    }
+
+    // Inicia el proceso: Llama a la función de carga al inicio.
+    // Es importante que esta llamada se haga después de que todas las funciones estén definidas.
+    cargarProgresoDesdeFirestore();
 });
